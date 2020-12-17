@@ -19,6 +19,11 @@ from news import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # sign up
-    path('signup/', views.signup_user, name='signup_user')
+    # auth
+    path('signup/', views.signup_user, name='signup_user'),
+    path('logout/', views.logout_user, name='logout_user'),
+    path('login/', views.login_user, name='login_user'),
+    # current
+    path('', views.home, name='home'),
+    path('current/', views.current, name='current'),
 ]
