@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1> Login </h1>
-    <h3> {% if error %} Error: {{ error }} {% endif %}</h3>
+    <h3> {% if error %} Errors: {{ error }} {% endif %}</h3>
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}

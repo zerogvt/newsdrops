@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 import logging
 # Create your views here.
 
@@ -22,14 +24,18 @@ def signup_user(request):
         if valid_error:
             return show_signup(request, valid_error)
         try:
+            password = request.POST['password1']
+            validate_password(password)
             user = User.objects.create(username=request.POST['username'],
-                                       password=request.POST['password1'])
+                                       password=password)
             user.save()
             login(request, user)
             return redirect(current)
             return HttpResponse('DONE!')
         except IntegrityError:
-            return show_signup(request, 'Username exists')
+            return show_signup(request, error='Username exists')
+        except ValidationError as err:
+            return show_signup(request, error=' '.join(err))
 
 
 def login_user(request):
