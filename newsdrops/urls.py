@@ -24,8 +24,7 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout_user'),
     path('login/', views.login_user, name='login_user'),
     # current
-    path('', views.home, name='home'),
-    path('news/', views.current, name='current'),
+    path('', views.current, name='current'),
     path('add/', views.new_post, name='new_post'),
     path('my/', views.my_posts, name='my_posts'),
     path('post/<int:pk>', views.edit_post, name='edit_post'),
