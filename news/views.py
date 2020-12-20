@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -6,6 +6,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
+from .forms import PostForm
+from .models import Post
 import logging
 # Create your views here.
 
@@ -31,7 +34,6 @@ def signup_user(request):
             user.save()
             login(request, user)
             return redirect(current)
-            return HttpResponse('DONE!')
         except IntegrityError:
             return show_signup(request, error='Username exists')
         except ValidationError as err:
@@ -53,11 +55,64 @@ def login_user(request):
             return show_login(request, 'Username and password do not match')
 
 
+@login_required
+def new_post(request):
+    if request.method == 'GET':
+        return render(request, 'news/new_post.html',
+                      {'form': PostForm()})
+    else:
+        try:
+            form = PostForm(request.POST)
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
+            return redirect(current)
+        except ValueError:
+            return render(request, 'news/new_post.html',
+                          {'form': PostForm(), 'error': 'Bad data.'})
+
+
+@login_required
+def edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk, user=request.user)
+    if request.method == 'GET':
+        form = PostForm(instance=post)
+        return render(request, 'news/edit_post.html', {'form': form,
+                                                       'post': post})
+    else:
+        try:
+            form = PostForm(request.POST, instance=post)
+            form.save()
+            return redirect(current)
+        except ValueError:
+            return render(request, 'news/edit_post.html', {'form': form,
+                                                           'post': post,
+                                                           'error': 'Bad Data'}
+                          )
+
+
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk, user=request.user)
+    if request.method == 'POST':
+        post.delete()
+        return redirect(my_posts)
+
+
 def current(request):
-    meta = {}
+    posts = Post.objects.all()
+    meta = {'posts': posts}
     return render(request, 'news/current.html', meta)
 
 
+@login_required
+def my_posts(request):
+    posts = Post.objects.filter(user=request.user)
+    meta = {'posts': posts}
+    return render(request, 'news/my_posts.html', meta)
+
+
+@login_required
 def logout_user(request):
     if request.method == 'POST':
         logout(request)

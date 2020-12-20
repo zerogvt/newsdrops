@@ -3,7 +3,7 @@ from .models import Post
 
 
 class PostAdmin(admin.ModelAdmin):
-    readonly_fields = ('crdate',)
+    readonly_fields = ('id', 'crdate',)
 
 
 # Register your models here.

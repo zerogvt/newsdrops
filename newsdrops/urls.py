@@ -25,5 +25,9 @@ urlpatterns = [
     path('login/', views.login_user, name='login_user'),
     # current
     path('', views.home, name='home'),
-    path('current/', views.current, name='current'),
+    path('news/', views.current, name='current'),
+    path('add/', views.new_post, name='new_post'),
+    path('my/', views.my_posts, name='my_posts'),
+    path('post/<int:pk>', views.edit_post, name='edit_post'),
+    path('post/<int:pk>/delete', views.delete_post, name='delete_post'),
 ]
