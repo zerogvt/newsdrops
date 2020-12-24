@@ -1,7 +1,7 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-    <h1> My activity </h1>
+    Logged in as {{ user.username }}
     <ul>
       {% for post in posts %}
       <li>

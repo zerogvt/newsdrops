@@ -1,7 +1,7 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-    <h1> Edit Post </h1>
+    <h2> Edit Post </h2>
     <h3> {% if error %} Errors: {{ error }} {% endif %}</h3>
     <form method="POST">
         {% csrf_token %}

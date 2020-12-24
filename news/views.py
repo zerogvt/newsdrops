@@ -25,12 +25,13 @@ def signup_user(request):
     if request.method == 'POST':
         valid_error = valid_user(request.POST)
         if valid_error:
-            return show_signup(request, valid_error)
+            return show_signup(request, error=valid_error)
         try:
             password = request.POST['password1']
-            validate_password(password)
             user = User.objects.create(username=request.POST['username'],
                                        password=password)
+            validate_password(password=password, user=user)
+            user.set_password(password)
             user.save()
             login(request, user)
             return redirect(current)
@@ -116,7 +117,7 @@ def my_posts(request):
 def logout_user(request):
     if request.method == 'POST':
         logout(request)
-        return redirect(signup_user)
+        return redirect(current)
 
 
 def valid_user(user):

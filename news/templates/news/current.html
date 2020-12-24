@@ -1,13 +1,16 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-    <h1> Newsdrops </h1>
-    <ul>
+    <ul class="list-group">
       {% for post in posts %}
-      <li>
-        <a href={{ post.link }}> 
-          {{ post.title }} ({{ post.link }})
-        </a>
+      <li class="list-group-item list-group-item-action news-item">
+          <span class="news-item-title"> {{ post.title }} </span>
+          <br>
+          <a href={{ post.link }}> 
+          <span class="news-item-url">{{ post.link | truncatechars:42}} </span>
+          </a>
+          <br>
+          <span class="news-item-text">{{ post.text | truncatechars:400}} </span>
       </li>
       {% endfor %}
     </ul>

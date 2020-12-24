@@ -1,11 +1,11 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-    <h1> Sign Up </h1>
+    <h3> Sign Up </h3>
     <h3> {% if error %} Errors: {{ error }} {% endif %}</h3>
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <button type='submit'> Sign Up </button>
+        <button class="btn btn-warning" type="submit"> Sign Up </button>
     </form>
 {% endblock %}
