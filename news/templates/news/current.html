@@ -1,9 +1,27 @@
 {% extends 'news/base.html' %}
+{% load news_extras %}
 
 {% block content %}
     <ul class="list-group">
       {% for post in posts %}
-      <li class="list-group-item list-group-item-action news-item">
+      {% if forloop.counter0|divisibleby:"2" %}
+        <li class="list-group-item list-group-item-action news-item background-one">
+      {% else %}
+        <li class="list-group-item list-group-item-action news-item background-two">
+      {% endif %}
+      <div class="news-item-preample">
+        <div class="news-item-vote-action">
+            {%if not ivoted|get_item:post.id %}
+              <form class="upvote-form" action="{% url 'upvote_post' post.id %}" method='POST'>
+              {% csrf_token %}
+              <button class="upvote-button" type="submit">^</button>
+              </form>
+            {% endif %}
+        </div>
+        <div class="news-item-votes">
+          {{ post.votes }}
+        </div>
+      </div>
           <span class="news-item-title"> {{ post.title }} </span>
           <br>
           <a href={{ post.link }}> 

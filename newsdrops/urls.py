@@ -29,4 +29,6 @@ urlpatterns = [
     path('my/', views.my_posts, name='my_posts'),
     path('post/<int:pk>', views.edit_post, name='edit_post'),
     path('post/<int:pk>/delete', views.delete_post, name='delete_post'),
+    path('post/<int:pk>/upvote', views.upvote_post, name='upvote_post'),
+
 ]

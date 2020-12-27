@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
-from django.core.exceptions import ValidationError
+from django.core.exceptions import (ValidationError, ObjectDoesNotExist,
+                                    MultipleObjectsReturned)
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
-from .models import Post
+from .models import Post, Vote
 import logging
 # Create your views here.
 
@@ -93,6 +94,23 @@ def edit_post(request, pk):
 
 
 @login_required
+def upvote_post(request, pk):
+    logger.error(f"=============>{pk}")
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        try:
+            Vote.objects.get(user=request.user,
+                             post=post)
+        except ObjectDoesNotExist:
+            logger.error("------------all ok")
+            Vote.objects.create(user=request.user, post=post)
+            post.votes += 1
+            post.save()
+        finally:
+            return redirect(current)
+
+
+@login_required
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk, user=request.user)
     if request.method == 'POST':
@@ -102,8 +120,16 @@ def delete_post(request, pk):
 
 def current(request):
     posts = Post.objects.all()
-    meta = {'posts': posts}
-    return render(request, 'news/current.html', meta)
+    ivoted = {}
+    if request.user.is_authenticated:
+        for post in posts:
+            try:
+                ivoted[post.id] = Vote.objects.get(user=request.user.id,
+                                                   post=post.id)
+            except ObjectDoesNotExist:
+                pass
+    context = {'posts': posts, 'ivoted': ivoted}
+    return render(request, 'news/current.html', context)
 
 
 @login_required
