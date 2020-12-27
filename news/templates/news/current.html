@@ -2,14 +2,14 @@
 {% load news_extras %}
 
 {% block content %}
-    <ul class="list-group">
+    <ul class="news">
       {% for post in posts %}
       {% if forloop.counter0|divisibleby:"2" %}
         <li class="list-group-item list-group-item-action news-item background-one">
       {% else %}
         <li class="list-group-item list-group-item-action news-item background-two">
       {% endif %}
-      <div class="news-item-preample">
+      <div class="news-item-col list-rows">
         <div class="news-item-vote-action">
             {%if not ivoted|get_item:post.id %}
               <form class="upvote-form" action="{% url 'upvote_post' post.id %}" method='POST'>
@@ -21,7 +21,8 @@
         <div class="news-item-votes">
           {{ post.votes }}
         </div>
-      </div class="news-item">
+      </div>
+      <div class="news-item-col">
           <span class="news-item-title"> {{ post.title }} </span>
           <br>
           <a href={{ post.link }}> 
@@ -29,6 +30,7 @@
           </a>
           <br>
           <span class="news-item-text">{{ post.text | truncatechars:400}} </span>
+        </div>
       </li>
       {% endfor %}
     </ul>

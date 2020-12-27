@@ -20,14 +20,14 @@ nav {
 }
 
 .news-item-preample {
-    display: inline-block;
+    float: left;
+    display: block;
 }
 
 .upvote-form {
 }
 
 .upvote-button {
-    display: inline;
     padding: 0.2em 0.6em;
     border-radius: 0.8em;
     font-size: small;
@@ -73,12 +73,35 @@ button:hover {
     display: inline-block;
 }
 
+.news {
+    display: table;
+    width:100%;
+    margin-bottom: 0.5em;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    text-align: left;
+}
+
 .news-item {
+    display: table-row;
+}
+
+.news-item-col { 
+    display: table-cell;
     margin-bottom: 0.5em;
     border-radius: 0.5em;
     padding: 0.5em;
 }
 
+.list-rows {
+    display: table;
+}
+
+.list-rows div {
+    display: table-row;
+    text-align: center;
+}
+  
 .news-item-title {
     font-weight: 800;
     font-family: 'Montserrat', sans-serif;
@@ -101,7 +124,6 @@ button:hover {
     font-weight: 400;
     font-size: small;
     font-family: 'Source Sans Pro', sans-serif;
-    display: inline-block;
 }
 
 
