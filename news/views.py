@@ -131,7 +131,7 @@ def delete_post(request, pk):
 
 
 def current(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-votes', 'crdate')
     ivoted = {}
     if request.user.is_authenticated:
         for post in posts:

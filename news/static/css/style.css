@@ -27,11 +27,11 @@ h1, h2, h3 {
 form input, textarea {
     width: 30em;
     display: block;
-    padding:10px;
-    border-radius:10px;
-    font-family:inherit;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: inherit;
     font-size: inherit;
-    text-align: right;
+    text-align: justify;
 }
 
 form label {
