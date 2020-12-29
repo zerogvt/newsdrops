@@ -10,16 +10,24 @@
         <li class="list-group-item list-group-item-action news-item background-two">
       {% endif %}
       <div class="news-item-col list-rows">
-        <div class="news-item-vote-action">
+        <div>
             {%if not ivoted|get_item:post.id %}
               <form class="upvote-form" action="{% url 'upvote_post' post.id %}" method='POST'>
               {% csrf_token %}
-              <button class="upvote-button" type="submit">^</button>
+              <button class="upvote-button" type="submit"> &#9650; </button>
               </form>
             {% endif %}
         </div>
         <div class="news-item-votes">
           {{ post.votes }}
+        </div>
+        <div>
+          {%if ivoted|get_item:post.id %}
+          <form class="unvote-form" action="{% url 'unvote_post' post.id %}" method='POST'>
+          {% csrf_token %}
+          <button class="unvote-button" type="submit"> &#9660; </button>
+          </form>
+          {% endif %}
         </div>
       </div>
       <div class="news-item-col">

@@ -30,5 +30,6 @@ urlpatterns = [
     path('post/<int:pk>', views.edit_post, name='edit_post'),
     path('post/<int:pk>/delete', views.delete_post, name='delete_post'),
     path('post/<int:pk>/upvote', views.upvote_post, name='upvote_post'),
+    path('post/<int:pk>/unvote', views.unvote_post, name='unvote_post'),
 
 ]

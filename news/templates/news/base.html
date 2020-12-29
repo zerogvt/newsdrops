@@ -13,20 +13,26 @@
     {% if user.is_authenticated %}
         <form class="nav-item" action="{% url 'logout_user' %}" method='POST'>
         {% csrf_token %}
-        <button class="button-warning" type="submit">logout</button>
+        <button class="nav-button button-warning" type="submit">logout</button>
         </form>
         <form class="nav-item" action="{% url 'my_posts' %}" method='GET'>
         {% csrf_token %}
-        <button class="" type="submit">my posts</button>
+        <button class="nav-button" type="submit">my posts</button>
         </form>
         <form class="nav-item" action="{% url 'new_post' %}" method='GET'>
         {% csrf_token %}
-        <button class="" type="submit">new post</button>
+        <button class="nav-button" type="submit">new post</button>
         </form>
     {% else %}
         <div class="">
-        <a class="" href="{% url 'login_user' %}">Login</a>
-        <a class="" href="{% url 'signup_user' %}">Sign Up</a>
+        <form class="nav-item" action="{% url 'login_user' %}" method='GET'>
+        {% csrf_token %}
+        <button class="nav-button" type="submit">login</button>
+        </form>
+        <form class="nav-item" action="{% url 'signup_user' %}" method='GET'>
+        {% csrf_token %}
+        <button class="nav-button" type="submit">sign up</button>
+        </form>
         </div>
     {% endif %}
     </nav>

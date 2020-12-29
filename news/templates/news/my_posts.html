@@ -1,11 +1,25 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-    Logged in as {{ user.username }}
-    <ul>
+    <ul class="news">
       {% for post in posts %}
-      <li>
-        <a href={% url 'edit_post' post.id %}> {{ post.title }} </a>
+      {% if forloop.counter0|divisibleby:"2" %}
+        <li class="list-group-item list-group-item-action news-item background-one">
+      {% else %}
+        <li class="list-group-item list-group-item-action news-item background-two">
+      {% endif %}
+      <div class="news-item-col">
+          <span class="news-item-title"> {{ post.title }} </span>
+          <br>
+          <a href={{ post.link }}> 
+          <span class="news-item-url">{{ post.link | truncatechars:42}} </span>
+          </a>
+          <br>
+          <span class="news-item-text">{{ post.text | truncatechars:400}} </span>
+          <br>
+          <br>
+          <a href={% url 'edit_post' post.id %}> Edit </a>
+        </div>
       </li>
       {% endfor %}
     </ul>

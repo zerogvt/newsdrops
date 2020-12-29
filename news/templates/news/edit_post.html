@@ -10,6 +10,6 @@
     </form>
     <form method="POST" action="{% url 'delete_post' post.id %}">
         {% csrf_token %}
-        <button type='delete'> Delete </button>
+        <button class="button-danger" type='delete'> Delete </button>
     </form>
 {% endblock %}

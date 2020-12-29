@@ -95,17 +95,29 @@ def edit_post(request, pk):
 
 @login_required
 def upvote_post(request, pk):
-    logger.error(f"=============>{pk}")
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         try:
             Vote.objects.get(user=request.user,
                              post=post)
         except ObjectDoesNotExist:
-            logger.error("------------all ok")
             Vote.objects.create(user=request.user, post=post)
             post.votes += 1
             post.save()
+        finally:
+            return redirect(current)
+
+
+@login_required
+def unvote_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        try:
+            Vote.objects.delete(user=request.user, post=post)
+            post.votes -= 1
+            post.save()
+        except ObjectDoesNotExist:
+            pass
         finally:
             return redirect(current)
 
