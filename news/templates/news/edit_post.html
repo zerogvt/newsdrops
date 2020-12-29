@@ -6,10 +6,10 @@
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <button type='submit'> Update </button>
+        <button class="nav-button" type='submit'> Update </button>
     </form>
     <form method="POST" action="{% url 'delete_post' post.id %}">
         {% csrf_token %}
-        <button class="button-danger" type='delete'> Delete </button>
+        <button class="nav-button button-danger" type='delete'> Delete </button>
     </form>
 {% endblock %}
