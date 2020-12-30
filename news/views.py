@@ -113,11 +113,14 @@ def unvote_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         try:
-            Vote.objects.delete(user=request.user, post=post)
+            vote = Vote.objects.get(user=request.user, post=post)
+            vote.delete()
             post.votes -= 1
             post.save()
         except ObjectDoesNotExist:
             pass
+        except Exception as e:
+            logger.error(e)
         finally:
             return redirect(current)
 
