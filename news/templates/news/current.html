@@ -37,9 +37,29 @@
           <span class="news-item-url">{{ post.link | truncatechars:42}} </span>
           </a>
           <br>
-          <span class="news-item-text">{{ post.text | truncatechars:400}} </span>
+          <span id="text_less_{{post.id}}" class="news-item-text" onclick="toggle_text({{post.id}}"> {{ post.text | truncatechars:100}} </span>
+          <span id="text_more_{{post.id}}" class="news-item-text hidden"> {{ post.text }} </span>
+          {% if post.text|length > 100 %}
+            <button class="more-button" onclick="toggle_text({{post.id}})">more</button>
+          {% endif %}
         </div>
       </li>
       {% endfor %}
     </ul>
+    <script>
+      function toggle_text(post_id) {
+        console.log("text_less_" + post_id)
+        toggle(document.getElementById("text_less_" + post_id));
+        toggle(document.getElementById("text_more_" + post_id));
+      }
+
+      function toggle(x) {
+        dis = window.getComputedStyle(x, null).display
+        if (dis === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      </script>
 {% endblock %}

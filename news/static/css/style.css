@@ -38,6 +38,10 @@ form label {
     font-family: 'Audiowide';
 }
 
+.hidden {
+    display: none;
+}
+
 form ul {
     padding: 0%;
     margin:0%
@@ -98,6 +102,24 @@ nav {
     cursor: pointer;
 }
 
+.nav-button:hover {
+    background-color: grey;
+    color: white;
+}
+
+.more-button {
+        display: block;
+        background-color: rgb(121, 120, 120);
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: small;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+}
+
 .button-warning {
     background-color: orange;
     color: black;
@@ -111,11 +133,6 @@ nav {
 
 .button-warning:hover {
     background-color: red;
-    color: white;
-}
-
-button:hover {
-    background-color: grey;
     color: white;
 }
 
@@ -161,7 +178,8 @@ button:hover {
 
 .news-item-url {
     font-weight: bold;
-    color:salmon;
+    color:indigo;
+    font-size: small;
 }
 
 .news-item-text {
